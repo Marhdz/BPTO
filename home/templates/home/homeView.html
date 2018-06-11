@@ -1,0 +1,11 @@
+{% extends "home/header.html" %}
+{% block content %}
+	{% for encuesta in object_list %}
+		<h5>{{ encuesta.date|date:"Y-m-d" }}<a href="/home/{{encuesta.id}}">  {{ encuesta.nombre }}</a></h5>
+	{% endfor %}
+	<div class=text-right style="font-size:45px">
+
+		 <a href="/add/encuesta" style="color:tomato">  <i class="fas fa-plus-circle"></i></a>
+
+	</div>
+{% endblock %}

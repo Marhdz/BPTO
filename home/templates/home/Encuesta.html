@@ -1,0 +1,11 @@
+{% extends "home/header.html" %}
+{% block content %}
+<h3><a href="/home/{{Encuesta.id}}">{{ encuesta.nombre }}</a></h3>
+<h6> fecha: {{ encuesta.date }}</h6>
+
+<div class = "container">
+	{{ encuesta.categoria|safe|linebreaks}}
+	{{encuesta.marca|safe}}
+</div>
+<br><br>
+{% endblock %}
