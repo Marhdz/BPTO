@@ -1,11 +1,16 @@
 {% extends "home/header.html" %}
 {% block content %}
-<h3><a href="/home/{{Encuesta.id}}">{{ encuesta.nombre }}</a></h3>
+<h3>{{ encuesta.nombre }}</h3>
 <h6> fecha: {{ encuesta.date }}</h6>
 
 <div class = "container">
 	{{ encuesta.categoria|safe|linebreaks}}
-	{{encuesta.marca|safe}}
+	<ul>
+		<h5>Marcas:</h5>
+	{% for marca in encuesta.marca_set.all %}
+	    <li>nombre: {{ marca.nombre }}<br> precio: {{ marca.precio }}</li>
+	{% endfor %}
+	</ul>
 </div>
 <br><br>
 {% endblock %}
