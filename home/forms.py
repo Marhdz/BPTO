@@ -7,4 +7,9 @@ class EncuestaForm(ModelForm):
         model = Encuesta
         fields = ['nombre', 'incremento', 'numIteraciones','categoria']
 
-MarcaFormSet=inlineformset_factory(Encuesta,Marca, fields=['nombre','precio','imagen'])
+class MarcaForm(ModelForm):
+    class Meta:
+        model = Marca
+        fields = ['nombre', 'imagen', 'precio']
+
+MarcaFormSet= inlineformset_factory(Encuesta,Marca, fields=['nombre','precio', 'imagen'])

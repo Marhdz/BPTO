@@ -1,0 +1,26 @@
+{{% extends "home/header.html" %}
+<head>
+	<title>Simulador BPTO</title>
+
+	<meta charset="utf-8" />
+	{% load staticfiles %}
+	<link rel="stylesheet" href="{% static 'home/css/bootstrap.min.css' %}" >
+
+	<meta name="viewport" content = "width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+	<style type="text/css">
+		html,
+		body {
+		  height:100%
+		}
+	</style>
+</head>
+{% block content %}
+<h3>Agregar Marcas</h3>
+        <form enctype="multipart/form-data" method="POST" class="marca-form">{% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" name="agregar"  >Guardar y agregar otra Marca</button>
+            <button type="submit" name="detail" >Finalizar</button>
+
+        </form>
+{% endblock %}

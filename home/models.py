@@ -5,7 +5,6 @@ class Encuesta(models.Model):
     incremento = models.DecimalField(max_digits=4, decimal_places=2)
     numIteraciones = models.IntegerField()
     categoria = models.TextField()
-    #marca= models.ManyToManyField(Marca)
     date = models.DateTimeField()
 
     def __str__(self):
@@ -15,6 +14,11 @@ class Marca(models.Model):
     nombre = models.CharField(max_length=40)
     precio = models.DecimalField(max_digits=4, decimal_places=2)
     imagen = models.ImageField()
-    encuesta= models.ForeignKey(Encuesta, on_delete=models.CASCADE)
+    encuesta= models.ForeignKey(Encuesta, on_delete=models.CASCADE, editable=False)
+
+    def save(self):
+            self.encuesta = Encuesta.objects.latest('date')
+            super(Marca, self).save()
+
     def __str__(self):
         return self.nombre
