@@ -1,16 +1,29 @@
 {% extends "home/header.html" %}
 {% block content %}
+{% load staticfiles %}
 <h3>{{ encuesta.nombre }}</h3>
 <h6> fecha: {{ encuesta.date }}</h6>
 
 <div class = "container">
 	{{ encuesta.categoria|safe|linebreaks}}
-	<ul>
+
 		<h5>Marcas:</h5>
-	{% for marca in encuesta.marca_set.all %}
-	    <li>nombre: {{ marca.nombre }}<br> precio: {{ marca.precio }}</li>
-	{% endfor %}
-	</ul>
+		<div class="card-deck">
+			{% for marca in encuesta.marca_set.all %}
+			<div class="card" >
+	   		<!-- <li>nombre: {{ marca.nombre }}<br> precio: {{ marca.precio }}</li> -->
+  			<img class="card-img-top" src="{% static 'gitad.png' %}"  alt="{{marca.nombre}}">
+  			<div class="card-body">
+    		<h5 class="card-title">{{marca.nombre}}</h5>
+    		<p class="card-text">precio: ${{marca.precio}}</p>
+  			</div>
+			</div>
+			{% endfor %}
+		</div>
+		<div class=text-right style="font-size:35px">
+			<a href="/{{encuesta.id}}/results" style="color:tomato">  <i class="fas fa-chart-line"></i><h5><i> resultados</i></h5></a>
+			<a href="/{{encuesta.id}}/survey" style="color:tomato">  <i class="fas fa-pen-square"></i><h5><i> ir a encuesta</i></h5></a>
+		</div>
 </div>
 <br><br>
 {% endblock %}

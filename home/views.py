@@ -1,12 +1,11 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect, HttpResponse
 from .forms import EncuestaForm, MarcaForm
-from django.db import models
 from django.utils import timezone
 from django.views.generic import CreateView
 from .models import Encuesta, Marca
 from django.urls import reverse
-from django.forms.models import inlineformset_factory
+from django.views import generic
 def index(request):
     return render(request, 'home/homeView.html')
 
@@ -38,3 +37,7 @@ def marca_add(request):
     else:
         form = MarcaForm()
     return render(request, 'home/marca.html', {'form': form})
+
+def pregunta(request, encuesta):
+
+    return render(request, 'home/opciones.html', {'pk':[encuesta]})
