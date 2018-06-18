@@ -40,4 +40,4 @@ def marca_add(request):
 
 def pregunta(request, encuesta):
 
-    return render(request, 'home/opciones.html', {'pk':[encuesta]})
+    return render(request, 'home/preguntas.html', {'pk':[encuesta]})
