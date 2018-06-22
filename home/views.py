@@ -6,6 +6,8 @@ from django.views.generic import CreateView
 from .models import Encuesta, Marca
 from django.urls import reverse
 from django.views import generic
+from django.db.models import F
+
 def index(request):
     request.session['it']=0
     return render(request, 'home/homeView.html')
@@ -24,19 +26,15 @@ def encuesta_add(request ):
         form = EncuestaForm()
     return render(request, 'home/encuesta_add.html', {'form': form})
 
-def r(request):
-	encuesta = Encuesta.objects.values()#obtenemos nuestros datos
-	return render(request,'resultados.html',{'datos':encuesta})
 
 def marca_add(request):
     if request.method == "POST":
         form = MarcaForm(request.POST, request.FILES)
         if form.is_valid():
              marca = form.save(commit=False)
-            #encuesta.author = request.user
              marca.save()
              if 'agregar' in request.POST:
-                return redirect('/add/marca_add')
+                return redirect('/add/encuesta/marca_add')
              else:
                 return HttpResponseRedirect(reverse('homepage'))
     else:
@@ -46,17 +44,36 @@ def marca_add(request):
 def pregunta(request, pk):
     encuesta=Encuesta.objects.get(pk=pk)
     if request.method == 'POST':
+        if 'none' in request.POST:
+            request.session['it']=0
+            # marcaId=request.POST.get('select','')
+            # p=encuesta.marca_set.get(pk=marcaId)
+            # p.precioE=0
+            # p.save()
+            return HttpResponseRedirect(reverse('homepage'))
+
         if request.session['it']<=encuesta.numIteraciones:
             request.session['it']+=1
             marcaId=request.POST.get('select','')
-            marca=Marca.objects.get(pk=marcaId)
-            # marca.precioE=5
-            # print('check')
-            # print(marca.precioE)
-            # marca.precioE.save()
+            p=encuesta.marca_set.get(pk=marcaId)
+            p.precioE=p.precioE+encuesta.incremento
+            p.votos=p.votos+1
+            print(p.votos)
+            p.save()
 
         else:
+            print('works')
             request.session['it']=0
+            marcaId=request.POST.get('select','')
+            p=encuesta.marca_set.get(pk=marcaId)
+            p.precioE=p.precio
+            p.save()
             return HttpResponseRedirect(reverse('homepage'))
-        # if request.POST.get("{{marca.id}}")
+    # else:
+    #     print('works')
+    #     for marca in encuesta.marca_set.iterator():
+    #         p=encuesta.marca_set
+    #         p.precioE=p.get(marca.id).precio
+    #         p.save()
+    #     return render(request, 'home/preguntas.html',{'encuesta':encuesta})
     return render(request, 'home/preguntas.html',{'encuesta':encuesta})

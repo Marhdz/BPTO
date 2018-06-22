@@ -10,24 +10,30 @@
 <div clas="container">
 	<div class="card-deck">
 		{% for marca in encuesta.marca_set.all %}
-		{% with precioD=precioE %}
 		<!-- <a href="" name="{{marca.id}}" class="card-link" style="display:block"> -->
 		<div class="card" >
 			<img class="card-img-top" src="{% static '{{marca.imagen}}' %}"  alt="{{marca.nombre}}">
 			<div class="card-body">
 			<h5 class="card-title" style="color:black">{{marca.nombre}}</h5>
-			<p class="card-text" style="color:black">precio: ${{marca.precioD}}</p>
+			{% if request.session.it == 0 %}
+			<p class="card-text" style="color:black">precio: ${{marca.precio}}</p>
+			{% endif %}
+			{% if request.session.it != 0 %}
+			<p class="card-text" style="color:black">precio: ${{marca.precioE}}</p>
+			{% endif %}
 			</div>
 			<!-- <input id="input_{{ marca.id }}" type="hidden" > -->
 			<form name="select" action="" method="post">
 			{% csrf_token %}
-			<button type="submit"  name="select" value="{{marca.id}}" >Elegir</button>
+			<button class="btn btn-primary" type="submit"  name="select" value="{{marca.id}}" >Elegir</button>
 		</form>
 		</div>
-		{% endwith %}
 		{% endfor %}
 	</div>
 </div>
 <br><br>
-<button class="btn btn-primary" type="submit" href=" ">No elegiría ninguna opción</button>
+<form name="none" action="" method="post">
+{% csrf_token %}
+<button class="btn btn-primary" type="submit" name="none" >No elegiría ninguna opción</button>
+</form>
 {% endblock %}

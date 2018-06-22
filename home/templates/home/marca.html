@@ -19,8 +19,8 @@
 <h3>Agregar Marcas</h3>
         <form enctype="multipart/form-data" method="POST" class="marca-form">{% csrf_token %}
             {{ form.as_p }}
-            <button type="submit" name="agregar"  >Guardar y agregar otra Marca</button>
-            <button type="submit" name="detail" >Finalizar</button>
+            <button class="btn btn-primary" type="submit" name="agregar"  >Guardar y agregar otra Marca</button>
+            <button class="btn btn-primary" type="submit" name="detail" >Finalizar</button>
 
         </form>
 {% endblock %}
