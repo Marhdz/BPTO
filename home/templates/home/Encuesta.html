@@ -12,7 +12,7 @@
 			{% for marca in encuesta.marca_set.all %}
 			<div class="card" >
 	   		<!-- <li>nombre: {{ marca.nombre }}<br> precio: {{ marca.precio }}</li> -->
-  			<img class="card-img-top" src="{% static {{marca.imagen}} %}"  alt="{{marca.nombre}}">
+  			<img class="card-img-top" src="{% static '{{marca.imagen}}' %}"  alt="{{marca.nombre}}">
   			<div class="card-body">
     		<h5 class="card-title">{{marca.nombre}}</h5>
     		<p class="card-text">precio: ${{marca.precio}}</p>

@@ -16,3 +16,8 @@ class EncuestaAdmin(admin.ModelAdmin):
     inlines = [MarcasInline]
     list_display = ('nombre', 'date')
 admin.site.register(Encuesta, EncuestaAdmin)
+
+class PreguntasAdmin(admin.ModelAdmin):
+    fieldsets = [
+    (None,{'fields':['nIteracion','encuesta']}),
+    ]

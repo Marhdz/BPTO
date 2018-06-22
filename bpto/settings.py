@@ -32,7 +32,6 @@ ALLOWED_HOSTS = []
 
 
 INSTALLED_APPS = [
-	'formly',
     'home',
     'django.contrib.admin',
     'django.contrib.auth',
