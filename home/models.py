@@ -4,7 +4,7 @@ class Encuesta(models.Model):
     nombre = models.CharField(max_length = 40)
     incremento = models.DecimalField(max_digits=4, decimal_places=2)
     numIteraciones = models.PositiveIntegerField()
-    categoria = models.TextField(max_length = 40)
+    categoria = models.CharField(max_length = 40)
     date = models.DateTimeField()
 
     def __str__(self):
@@ -33,7 +33,3 @@ class Opciones(models.Model):
 
     def __str__(self):
         return self.nIteracion
-
-class Persona(models.Model):
-	name = models.CharField(max_length=25)
-	edad = models.PositiveSmallIntegerField()

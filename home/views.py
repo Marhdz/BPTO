@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from .forms import EncuestaForm, MarcaForm
 from django.utils import timezone
 from django.views.generic import CreateView
-from .models import Encuesta, Marca, Persona
+from .models import Encuesta, Marca
 from django.urls import reverse
 from django.views import generic
 from django.db.models import F
@@ -56,13 +56,12 @@ def pregunta(request, pk):
             request.session['it']+=1
             marcaId=request.POST.get('select','')
             p=encuesta.marca_set.get(pk=marcaId)
-            p.precioE=p.precioE+encuesta.incremento
+            p.precioE=p.precio+encuesta.incremento
             p.votos=p.votos+1
             print(p.votos)
             p.save()
 
         else:
-            print('works')
             request.session['it']=0
             marcaId=request.POST.get('select','')
             p=encuesta.marca_set.get(pk=marcaId)

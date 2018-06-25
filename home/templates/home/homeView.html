@@ -3,7 +3,7 @@
 {% if object_list %}
     <ul>
 	{% for encuesta in object_list %}
-		<h5>{{ encuesta.date|date:"Y-m-d" }}<a href="home/{{encuesta.id}}">  {{ encuesta.nombre }}</a></h5>
+		<h5>{{encuesta.categoria}}    {{ encuesta.date|date:"Y-m-d" }}<a href="home/{{encuesta.id}}">  {{ encuesta.nombre }}</a></h5>
 	{% endfor %}
 </ul>
 {% else %}
