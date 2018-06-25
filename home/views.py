@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from .forms import EncuestaForm, MarcaForm
 from django.utils import timezone
 from django.views.generic import CreateView
-from .models import Encuesta, Marca
+from .models import Encuesta, Marca, Persona
 from django.urls import reverse
 from django.views import generic
 from django.db.models import F
@@ -77,3 +77,7 @@ def pregunta(request, pk):
     #         p.save()
     #     return render(request, 'home/preguntas.html',{'encuesta':encuesta})
     return render(request, 'home/preguntas.html',{'encuesta':encuesta})
+
+def resultados(request,pk):
+    encuesta=Encuesta.objects.get(pk=pk)
+    return render(request,'home/resultados.html',{'encuesta':encuesta})

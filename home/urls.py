@@ -11,7 +11,7 @@ urlpatterns = [
                 path('add/encuesta/', views.encuesta_add, name='encuesta_add'),
                 url(r'^add/encuesta/marca_add/$', views.marca_add, name= 'marca_add'),
                 url(r'^(?P<pk>\d+)/survey', views.pregunta ,name='preguntas'),
-                # path('33/results', views.r, name="resultados"),
+                url(r'^(?P<pk>\d+)/results', views.resultados, name='resultados'),
                 url(r'^$', ListView.as_view(
                                     queryset=Encuesta.objects.all().order_by("-date")[:25],
                                     template_name="home/homeView.html"), name="homepage"),

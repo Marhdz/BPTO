@@ -1,9 +1,7 @@
 {% extends "home/Encuesta.html" %}
 {% block content %}
 {% load staticfiles %}
-{% with counter=0 %}
 
-{% endwith %}
 <h3>{{ encuesta.nombre }}</h3>
 <h6> Selecciona la opción de tu preferencia:</h6>
 {{request.session.it}}
@@ -12,7 +10,7 @@
 		{% for marca in encuesta.marca_set.all %}
 		<!-- <a href="" name="{{marca.id}}" class="card-link" style="display:block"> -->
 		<div class="card" >
-			<img class="card-img-top" src="{% static '{{marca.imagen}}' %}"  alt="{{marca.nombre}}">
+			<img class="card-img-top" src="{{marca.imagen.url}}"  alt="{{marca.nombre}}">
 			<div class="card-body">
 			<h5 class="card-title" style="color:black">{{marca.nombre}}</h5>
 			{% if request.session.it == 0 %}
@@ -22,7 +20,6 @@
 			<p class="card-text" style="color:black">precio: ${{marca.precioE}}</p>
 			{% endif %}
 			</div>
-			<!-- <input id="input_{{ marca.id }}" type="hidden" > -->
 			<form name="select" action="" method="post">
 			{% csrf_token %}
 			<button class="btn btn-primary" type="submit"  name="select" value="{{marca.id}}" >Elegir</button>

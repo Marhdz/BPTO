@@ -1,31 +1,79 @@
 {% extends "home/Encuesta.html" %}
 {% block content %}
 {% load staticfiles %}
-<script src="https://code.highcharts.com/highcharts.src.js"></script>
-<h3>{{ encuesta.nombre }}</h3>
-<h6> Selecciona la opción de tu preferencia:</h6>
-<div id="container">
+<h2>{{encuesta.nombre}}</h2>
+  <div id="precioInicial" style="width:350px;">
+  </div>
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+      <script src="https://code.highcharts.com/modules/exporting.js"></script>
   <script type="text/javascript">
-  Highcharts.chart('container', {
-       chart: {
-           type: 'column'
-       },
-       title: {
-           text: 'Datos iniciales'
-       },
-       xAxis: {
-           categories: ['Marcas']
-       },
-       series:[
-       	{% for persona in datos %}
-       		{
-       			nombre: '{{marca.nombre}}',
-       			data: [{{mara.precio}}]
-       		},
-       	{% endfor %}
-       ]});
-</div>
+   Highcharts.chart('precioInicial', {
+      chart: {
+          type: 'column'
+      },
+      title: {
+          text: 'Precios iniciales'
+      },
+      xAxis: {
+          categories: ['Marcas']
+      },
+      yAxis: {
+              min: 0,
+              title: {
+                  text: 'Precios ($)'
+              }
+          },
+      series: [
+      {% for marca in encuesta.marca_set.all %}
+      {
+          name: '{{marca.nombre}}',
+          data: [{{marca.precio}}]
+      },
+      {% endfor %}
+      ]
+  });
+  </script>
 <br><br>
-<button class="btn btn-primary" type="submit" href=" ">No elegiría ninguna opción</button>
-
+  <div id="container2" style="width:400px;">
+  </div>
+  <script type="text/javascript">
+   Highcharts.chart('container2', {
+     chart: {
+       plotBackgroundColor: null,
+       plotBorderWidth: null,
+       plotShadow: false,
+       type: 'pie'
+   },
+   title: {
+       text: 'Dominio de mercado'
+   },
+   tooltip: {
+       pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+   },
+   plotOptions: {
+       pie: {
+           allowPointSelect: true,
+           cursor: 'pointer',
+           dataLabels: {
+               enabled: true,
+               format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+               style: {
+                   color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+               }
+           }
+       }
+   },
+   series: [{
+       name: 'Brands',
+       colorByPoint: true,
+       data: [
+       {% for marca in encuesta.marca_set.all %}
+       {
+           name: '{{marca.nombre}}',
+           y: {{marca.votos}}
+       },
+       {% endfor %}]
+   }]
+  });
+  </script>
 {% endblock %}
